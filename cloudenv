@@ -1,0 +1,39 @@
+# Either fill in this section, or delete it and use your existing cloudrc file.
+OS_USERNAME=john.schofield
+OS_TENANT_NAME=407382
+OS_AUTH_SYSTEM=rackspace
+OS_PASSWORD=6f43ce52dc234fe4b66bc719346db23d
+OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
+OS_REGION_NAME=DFW
+OS_NO_CACHE=1
+export OS_USERNAME OS_TENANT_NAME OS_AUTH_SYSTEM OS_PASSWORD OS_AUTH_URL OS_REGION_NAME OS_NO_CACHE
+
+# Config Options -- Edit These
+
+export NICKNAME=schof
+export KEYPAIR_NAME=schofield_rackspace
+
+# Probably don't need to edit these.
+export INFRA1_HOST=$NICKNAME-rcm-infra1
+export INFRA2_HOST=$NICKNAME-rcm-infra2
+export INFRA3_HOST=$NICKNAME-rcm-infra2
+export COMPUTE01_HOST=$NICKNAME-rcm-compute01
+export STORAGE01_HOST=$NICNAME-rcm-storage01
+
+export LXC_VOLUME_NAME=$NICKNAME-aio-lxc
+export MGMT_NETWORK_NAME=$NICKNAME-aio-mgmt
+export VMNET_NETWORK_NAME=$NICKNAME-aio-vmnet
+
+export GIT_URL=git@github.com:rcbops/ansible-lxc-rpc.git
+export GIT_BRANCH=master
+
+export EXTERNAL_VOLUME_GB=500
+export BOOTIMAGE=255df5fb-e3d4-45a3-9a07-c976debf7c14 # Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+export LXC_VOLUME_TYPE=8a4e0d56-b904-44f7-b4bc-8b065729136b # SSD
+
+# Automatically Generated -- Don't Edit these
+export PUBLIC_IP=23.253.75.170
+export SRVR=$PUBLIC_IP
+export LXC_VOLUME_ID=87167a64-e875-444c-8cc4-fd93076779d8
+export MGMT_NETWORK_ID=ad8f0afd-f59f-4f9a-8bed-d2339e3b187f
+export VMNET_NETWORK_ID=0e182f6f-9851-4a37-8e81-640581422f35
