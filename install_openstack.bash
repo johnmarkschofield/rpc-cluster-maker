@@ -1,8 +1,11 @@
+#!/bin/bash
+
 
 set -e
 set -o pipefail
 set -x
 source /root/cloudenv
+set -u
 
 USERVARFILE=/opt/ansible-lxc-rpc/rpc_deployment/vars/user_variables.yml
 

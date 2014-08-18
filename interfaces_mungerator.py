@@ -5,6 +5,7 @@ import re
 import sys
 
 interfacesfile = "/etc/network/interfaces"
+interfacesfile_bu = "/etc/network/interfaces.original"
 
 VMNET_label = os.environ['VMNET_NETWORK_NAME']
 MGMT_label = os.environ['MGMT_NETWORK_NAME']
@@ -65,6 +66,9 @@ iface br-vmnet inet static
 
 with open(interfacesfile, 'rt') as ifo:
     interfaces_text = ifo.read()
+
+with open(interfacesfile_bu, 'wt') as ofo:
+    ofo.write(interfaces_text)
 
 
 if "# MODIFIED BY INTERFACES_MUNGERATOR" in interfaces_text:

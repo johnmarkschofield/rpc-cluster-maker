@@ -1,0 +1,63 @@
+---
+- hosts: containerhosts
+  tasks:
+
+  - name: Test for existence of lxc volume group
+    shell: vgdisplay | grep "VG Name" | grep lxc
+    register: lxc_vg_exists
+    ignore_errors: True
+
+  - command: parted -s /dev/xvdb mktable gpt
+    when: lxc_vg_exists|failed
+
+  - command: parted -s /dev/xvdb mkpart lvm 0% 100%
+    when: lxc_vg_exists|failed
+
+  - command: pvcreate /dev/xvdb1
+    when: lxc_vg_exists|failed
+
+  - name: Create lxc volume group
+    shell: vgcreate lxc /dev/xvdb1
+    when: lxc_vg_exists|failed
+
+
+
+- hosts: storagehosts
+  tasks:
+
+
+  - name: Test for existence of cinder-volumes volume group
+    shell: vgdisplay | grep "VG Name" | grep cinder-volumes
+    register: cinder_volumes_vg_exists
+    ignore_errors: True
+
+  - command: parted -s /dev/xvde mktable gpt
+    when: cinder_volumes_vg_exists|failed
+
+  - command: parted -s /dev/xvde mkpart lvm 0% 100%
+    when: cinder_volumes_vg_exists|failed
+
+  - command: pvcreate /dev/xvde1
+    when: cinder_volumes_vg_exists|failed
+
+  - name: Create lxc volume group
+    shell: vgcreate cinder-volumes /dev/xvde1
+    when: cinder_volumes_vg_exists|failed
+
+
+
+- hosts: all
+  tasks:
+
+  - copy: >
+      src="interfaces_mungerator.py"
+      dest="/root/interfaces_mungerator.py"
+      owner="root"
+      group="root"
+      mode="0755"
+
+  - copy: src="cloudenv" dest="/root/cloudenv"
+
+  - shell: source /root/cloudenv ; python /root/interfaces_mungerator.py
+    args:
+      creates: /etc/network/interfaces.original

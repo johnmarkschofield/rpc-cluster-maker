@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -o pipefail
+set -u
+source cloudenv
+set -x
+
+for IPADDR in $INFRA1_PUBLIC_IP $INFRA2_PUBLIC_IP $INFRA3_PUBLIC_IP $COMPUTE01_PUBLIC_IP $STORAGE01_PUBLIC_IP $LOGGING1_PUBLIC_IP $HAPROXY_PUBLIC_IP ; do
+    while ! ssh root@$IPADDR ls ; do sleep 5 ; done
+done
+

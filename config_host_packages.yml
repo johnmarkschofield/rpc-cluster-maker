@@ -1,0 +1,45 @@
+---
+- hosts: all
+  tasks:
+  - name: update apt cache
+    apt: >
+      cache_valid_time=600
+      update_cache=yes
+
+  - apt: name=update-notifier-common
+  - name: update all packages
+    apt: >
+      upgrade=dist
+
+  - apt: name=ntp
+  - apt: name=emacs24-nox
+  - apt: name=vim
+  - apt: name=tmux
+
+
+- hosts: containerhosts
+  tasks:
+  - apt: name=lvm2
+  - apt: name=parted
+  - apt: name=bridge-utils
+
+
+- hosts: deployhosts
+  tasks:
+  - apt: name=git
+  - apt: name=aptitude
+  - apt: name=python-dev
+  - apt: name=python-setuptools
+
+  - command: "easy_install pip"
+    args:
+      creates: /usr/local/bin/pip
+
+  - pip: name=ansible version=1.6.6
+
+
+- hosts: all
+  tasks:
+  - command: "/sbin/shutdown -r now"
+    args:
+      removes: /var/run/reboot-required
